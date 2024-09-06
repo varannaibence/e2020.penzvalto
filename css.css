@@ -1,0 +1,17 @@
+:root{
+    --sKek: #004e98;
+    --vKek: #004e98;
+    --szurke: #c0c0c0;
+    --vFeher: #ebebeb;
+    --vNsarga: #ff6700;
+}
+@font-face {
+    font-family: Humane;
+    src: url(fonts/Humane-Bold.otf);
+}
+#navbarSticky {
+    position: sticky;
+    top: 0;
+    overflow: hidden;
+    background-color: #333;
+  }
