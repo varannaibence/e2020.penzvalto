@@ -5,13 +5,19 @@
     --vFeher: #ebebeb;
     --vNsarga: #ff6700;
 }
+
 @font-face {
     font-family: Humane;
     src: url(fonts/Humane-Bold.otf);
 }
-#navbarSticky {
-    position: sticky;
-    top: 0;
-    overflow: hidden;
-    background-color: #333;
+model-viewer {
+    background-color: transparent;
   }
+body{
+    padding: 0;
+    margin: 0;
+}
+.fsDiv{
+    height: 100vh;
+    width: 100%;
+}
