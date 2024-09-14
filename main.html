@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FLIPFUNDS</title>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
+  </script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+  <link rel="stylesheet" href="css.css" />
+</head>
+
+<body>
+  <nav id="nav-example" class="nav justify-content-center bg-light align-items-center fixed-top">
+    <a class="nav-link text-dark" href="#div1">Rólunk</a>
+    <a class="nav-link text-dark" href="#div2">Szolgáltatásaink</a>
+    <a class="nav-link text-dark" href="#div3">Szabályzat</a>
+    <a class="nav-link text-dark" href="#div4">Kapcsolat</a>
+  </nav>
+  <div>
+    <div data-bs-spy="scroll" data-bs-target="#nav-example" data-bs-smooth-scroll="true" tabindex="0" class="bg-light">
+      <div id="div1" class="container d-flex bg-light flex-column align-items-center" style="height: 100vh">
+        <div class="row mt-5 pb-0 align-items-center text-center">
+          <h1 class="h1-bold-gradient" style="margin-bottom: -2vh">
+            FLIPFUNDS
+          </h1>
+          <p class="mt-0 fs-4" style="font-family: MPLUS-NORMAL">
+            Fejlődünk a pénzügyekben.
+          </p>
+        </div>
+        <div class="row w-100">
+          <div class="col-8 d-flex flex-column justify-content-center">
+            <div class="w-75">
+              <h2 class="h2-udv">Üdvözlünk a FlipFunds-nál!🎉</h2>
+              <p class="fs-5">
+                Mi vagyunk Magyarország első crypto & deviza váltója, ahol
+                egyszerűen és biztonságosan kezelheted pénzügyeidet. Akár a
+                legújabb kriptovaluták, akár a klasszikus devizák érdekelnek,
+                nálunk megtalálod a legjobb megoldásokat egy felhasználóbarát
+                felületen.
+              </p>
+              <p class="fs-5">
+                Célunk, hogy mindenki számára könnyen elérhetővé tegyük a
+                digitális pénzügyek világát, barátságos ügyfélszolgálatunk
+                pedig mindig itt van, hogy segítsen. Fedezd fel velünk a jövő
+                pénzügyeit!
+              </p>
+              <a href="#div2">
+                <button type="button" class="btn btn-outline-primary">
+                  Kereskedés azonnal
+                </button>
+              </a>
+            </div>
+          </div>
+          <div class="col-4">
+            <model-viewer id="orbit-demo" src="0.glb" alt="föld" background-color="transparent" shadow-intensity="0"
+              autoplay interpolation-decay="200">
+            </model-viewer>
+          </div>
+        </div>
+      </div>
+      <div id="div2" class="d-flex align-items-center justify-content-center bg-light" style="height: 100vh;">
+        <img src="imgs/bitcoin.png" alt="" class="crypto" id="c1">
+        <img src="imgs/ethereum.png" alt="" class="crypto" id="c2">
+        <img src="imgs/litecoin.png" alt="" class="crypto" id="c3">
+        <img src="imgs/solana.png" alt="" class="crypto" id="c4">
+        <div class="background">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+       </div>
+       <div class="col">
+        
+       </div>
+        <div class="row d-flex align-items-center justify-content-center  ">
+          <div class="col rounded p-4" style="height: 50vh; width: 75vh;">
+            <div class="tracker">
+              <h1 class="h1-bold">KRIPTOVALUTA ÁTVÁLTÓ</h1>
+              <form id="trackerForm">
+                <label for="currency_mennyiseg">Átváltani kívánt mennyiség</label>
+                <br>
+                <input type="number" id="currency_mennyiseg" placeholder="0.0" min="0.000230165" step="any" required>
+                <select id="currency" name="currency" required>
+                  <option value="bitcoin">BTC</option>
+                  <option value="ethereum">ETH</option>
+                  <option value="litecoin">LTC</option>
+                  <option value="ripple">XRP</option>
+                  <option value="solana">SOL</option>
+                </select><br /><br />
+                <label for="currency_atvlatva">Átváltott mennyiség</label>
+                <br>
+                <input type="number" id="currency_atvlatva" placeholder="0.0">
+                <select id="targetCurrency" name="targetCurrency" required>
+                  <option value="usd">USD</option>
+                  <option value="eur">EUR</option>
+                  <option value="huf">HUF</option>
+                </select><br /><br />
+              </form>
+              <p id="currentPriceLabel">Aktuális ár: Betöltés...</p>
+              <p id="result"></p>
+
+
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div id="div3" class="bg-light" style="height: 100vh">div3</div>
+      <div id="div4" class="bg-warning" style="height: 100vh">div4</div>
+    </div>
+
+    footer
+  </div>
+
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      const modelViewer = document.querySelector("#orbit-demo");
+      modelViewer.cameraOrbit = "35deg 90deg 14m";
+      document.addEventListener("mousemove", (event) => {
+        const {
+          clientX,
+          clientY
+        } = event;
+        const {
+          innerWidth,
+          innerHeight
+        } = window;
+        // Az egér pozíciójának arányosítása
+        const xOffset = clientX / innerWidth - 0.5;
+        const yOffset = clientY / innerHeight - 0.5;
+        // Parallax hatás finom azimutális és elevációs eltolással
+        const parallaxAzimuth = xOffset * 15; // Kis eltolás balra-jobbra
+        const parallaxElevation = yOffset * 15; // Kis eltolás fel-le
+        // A kezdeti 35 fokos nézethez hozzáadjuk a parallax hatást
+        modelViewer.cameraOrbit = `${35 + parallaxAzimuth}deg ${
+            90 + parallaxElevation
+          }deg 9m`;
+      });
+      // Navbar eltüntetése és megjelenítése görgetés alapján
+      let lastScrollTop = 0;
+      const navbar = document.getElementById("nav-example");
+      window.addEventListener("scroll", function() {
+        let scrollTop =
+          window.pageYOffset || document.documentElement.scrollTop;
+        // Ha lefelé görgetünk, a navbar elrejtődik, ha felfelé, visszajön
+        if (scrollTop > lastScrollTop) {
+          navbar.classList.add("nav-hidden");
+        } else {
+          navbar.classList.remove("nav-hidden");
+        }
+        lastScrollTop = scrollTop;
+      });
+    });
+    /* Pénzszámoló */
+    let myChart;
+
+    let rate;
+
+    function startTracking() {
+      const currency = document.getElementById("currency").value.toLowerCase();
+      const targetCurrency = document.getElementById("targetCurrency").value.toLowerCase();
+      const amountElement = document.getElementById("currency_mennyiseg");
+      const convertedAmountElement = document.getElementById("currency_atvlatva");
+
+      // Árfolyam lekérése
+      fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${currency}&vs_currencies=${targetCurrency}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data[currency] && data[currency][targetCurrency]) {
+            rate = data[currency][targetCurrency];
+            const formattedRate = rate.toLocaleString("hu");
+
+            document.getElementById("currentPriceLabel").innerHTML = `
+              A(z) ${currency.toUpperCase()} aktuális ára ${targetCurrency.toUpperCase()}-ban: ${formattedRate} ${targetCurrency.toUpperCase()}
+            `;
+
+            // Átváltás az eredeti mennyiségből a célnyelvbe
+            amountElement.addEventListener("keyup", () => {
+              const amount = parseFloat(amountElement.value);
+              if (!isNaN(amount)) {
+                const convertedValue = rate * amount;
+                convertedAmountElement.value = convertedValue.toFixed(2);
+                document.getElementById("result").innerHTML = `
+                  A(z) <strong>${amount}</strong> ${currency.toUpperCase()} értéke: <strong>${convertedValue.toFixed(2)}</strong> ${targetCurrency.toUpperCase()}
+                `;
+              }
+            });
+
+            // Átváltás visszafelé a célnyelvből az eredeti valutába
+            convertedAmountElement.addEventListener("keyup", () => {
+              const convertedAmount = parseFloat(convertedAmountElement.value);
+              if (!isNaN(convertedAmount)) {
+                const originalValue = convertedAmount / rate;
+                amountElement.value = originalValue.toFixed(8); // 8 tizedesjegy a pontos kripto értékhez
+              }
+            });
+          } else {
+            document.getElementById("result").innerHTML = "Hiba az árfolyam lekérésekor.";
+            document.getElementById("currentPriceLabel").innerHTML = "Hiba az aktuális ár lekérésekor.";
+          }
+        })
+        .catch((error) => {
+          document.getElementById("result").innerHTML = "Hiba az adatok lekérésekor.";
+          document.getElementById("currentPriceLabel").innerHTML = "Hiba az aktuális ár lekérésekor.";
+        });
+    }
+
+    // Új árfolyam lekérése, amikor a valuta vagy a célvaluta megváltozik
+    document.getElementById("currency").addEventListener("change", startTracking);
+    document.getElementById("targetCurrency").addEventListener("change", startTracking);
+
+    window.onload = function () {
+      startTracking();
+    };
+  </script>
+</body>
+
+</html>
