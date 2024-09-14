@@ -1,0 +1,8 @@
+Model Information:
+* title:	Earth
+* source:	https://sketchfab.com/3d-models/earth-c7c75d22313f4600a5f00dd0bee2c723
+* author:	MuseModels (https://sketchfab.com/MuseModels)
+
+Model License:
+* license type:	SKETCHFAB Standard (https://sketchfab.com/licenses)
+* requirements:	Under basic restrictions, use worldwide, on all types of media, commercially or not, and in all types of derivative works

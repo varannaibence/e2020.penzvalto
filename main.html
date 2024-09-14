@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FLIPFUNDS</title>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script
+      type="module"
+      src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"
+    ></script>
+    <link rel="stylesheet" href="css.css" />
+  </head>
+  <body>
+    <nav
+      id="nav-example"
+      class="nav justify-content-center align-items-center fixed-top"
+    >
+      <a class="nav-link text-dark" href="#div1">Rólunk</a>
+      <a class="nav-link text-dark" href="#div2">Szolgáltatásaink</a>
+      <a class="nav-link text-dark" href="#div3">Szabályzat</a>
+      <a class="nav-link text-dark" href="#div4">Kapcsolat</a>
+    </nav>
+    <div>
+      <div
+        data-bs-spy="scroll"
+        data-bs-target="#nav-example"
+        data-bs-smooth-scroll="true"
+        tabindex="0">
+        <div id="div1" class="container d-flex flex-column align-items-center" style="height: 100vh">
+        <div class="row mt-5 pb-0 align-items-center text-center">              
+            <h1 class="h1-bold-gradient" style="margin-bottom: -2vh;">FLIPFUNDS</h1>
+            <p class="mt-0 fs-4" style="font-family: MPLUS-NORMAL;">Összekötünk a világgal.</p>
+        </div>
+          <div class="row w-100">
+            <div class="col-8 d-flex flex-column justify-content-center">
+                <div class="w-75">
+                  <h2 class="h2-udv">Üdvözlünk a FlipFunds-nál!🎉</h2>
+                  <p class="fs-5">Mi vagyunk Magyarország első crypto & deviza váltója, ahol egyszerűen és biztonságosan kezelheted pénzügyeidet. Akár a legújabb kriptovaluták, akár a klasszikus devizák érdekelnek, nálunk megtalálod a legjobb megoldásokat egy felhasználóbarát felületen.</p>
+                  <p class="fs-5">Célunk, hogy mindenki számára könnyen elérhetővé tegyük a digitális pénzügyek világát, barátságos ügyfélszolgálatunk pedig mindig itt van, hogy segítsen. Fedezd fel velünk a jövő pénzügyeit!</p>
+                    <a href="#div2">
+                  <button type="button" class="btn btn-outline-primary">
+                        Kereskedés azonnal
+                    </button>
+                </a>
+                
+                </div>
+              </div>
+            <div class="col-4">
+              <model-viewer
+                id="orbit-demo"
+                src="3d/scene.gltf"
+                alt="föld"
+                auto-rotate
+                background-color="transparent"
+                shadow-intensity="0"
+                autoplay
+                interpolation-decay="200"
+              >
+              </model-viewer>
+            </div>
+          </div>
+        </div>
+        <div id="div2" class="bg-success" style="height: 100vh">div2</div>
+        <div id="div3" class="bg-light" style="height: 100vh">div3</div>
+        <div id="div4" class="bg-warning" style="height: 100vh">div4</div>
+      </div>
+
+      footer
+    </div>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        const modelViewer = document.querySelector("#orbit-demo");
+        const orbitCycle = [
+          "45deg 55deg 4m",
+          "-60deg 110deg 2m",
+          "90deg 120deg 5m",
+        ];
+
+        let currentOrbitIndex = 0;
+
+        setInterval(() => {
+          currentOrbitIndex = (currentOrbitIndex + 1) % orbitCycle.length;
+          modelViewer.cameraOrbit = orbitCycle[currentOrbitIndex];
+        }, 3000);
+      });
+    </script>
+  </body>
+</html>
