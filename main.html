@@ -97,17 +97,20 @@
         <div class="row d-flex align-items-center justify-content-center  ">
           <div class="col rounded p-4" style="height: 50vh; width: 75vh;">
             <div class="tracker">
-              <h1 class="h1-bold">KRIPTOVALUTA ÁTVÁLTÓ</h1>
+              <h1 class="h1-bold">VALUTA ÁTVÁLTÓ</h1>
               <form id="trackerForm">
-                <label for="currency_mennyiseg">Átváltani kívánt mennyiség</label>
+                <label for="currency_mennyiseg">Átváltani kívánt mennyiség *</label>
                 <br>
-                <input type="number" id="currency_mennyiseg" placeholder="0.0" min="0.000230165" step="any" required>
+                <input type="number" id="currency_mennyiseg" placeholder="0.0"  min="0.000000065" step="any" required>
                 <select id="currency" name="currency" required>
-                  <option value="bitcoin">BTC</option>
-                  <option value="ethereum">ETH</option>
-                  <option value="litecoin">LTC</option>
-                  <option value="ripple">XRP</option>
-                  <option value="solana">SOL</option>
+                  <option value="usd" selected> USD</option>
+                  <option value="eur">EUR</option>
+                  <option value="huf" >HUF</option>
+                  <option value="btc">BTC</option>
+                  <option value="eth">ETH</option>
+                  <option value="ltc">LTC</option>
+                  <option value="xrp">XRP</option>
+                  <option value="sol">SOL</option>
                 </select><br /><br />
                 <label for="currency_atvlatva">Átváltott mennyiség</label>
                 <br>
@@ -115,9 +118,17 @@
                 <select id="targetCurrency" name="targetCurrency" required>
                   <option value="usd">USD</option>
                   <option value="eur">EUR</option>
-                  <option value="huf">HUF</option>
+                  <option value="huf" selected>HUF</option>
+                  <option value="btc">BTC</option>
+                  <option value="eth">ETH</option>
+                  <option value="ltc">LTC</option>
+                  <option value="xrp">XRP</option>
+                  <option value="sol">SOL</option>
                 </select><br /><br />
               </form>
+
+              <input type="button" class="btn btn-outline-primary" name="valtas_bt" onclick="startTracking()" value="Átváltás" id="valtas_bt">
+              <br><br>
               <p id="currentPriceLabel">Aktuális ár: Betöltés...</p>
               <p id="result"></p>
 
@@ -131,7 +142,7 @@
       <div id="div4" class="bg-warning" style="height: 100vh">div4</div>
     </div>
 
-    footer
+    *xyz nem müködik mivel szar az api és nem támogatja a usd->huf átváltást
   </div>
 
   <script>
@@ -173,23 +184,203 @@
         lastScrollTop = scrollTop;
       });
     });
-    /* Pénzszámoló */
-    let myChart;
+    
+  </script>
+   <script>
+    async function startTracking() {
+        const amount = parseFloat(document.getElementById('currency_mennyiseg').value);
+        const fromCurrency = document.getElementById('currency').value;
+        const toCurrency = document.getElementById('targetCurrency').value;
+        const priceLabel = document.getElementById('currentPriceLabel');
+        const resultField = document.getElementById('currency_atvlatva');
+        const irjadki = document.getElementById('result');
 
-    let rate;
 
-    function startTracking() {
+if (fromCurrency=='huf' || 'btc')
+{
+if (isNaN(amount) || amount <= 0) {
+            alert('Kérlek, adj meg egy érvényes mennyiséget.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${toCurrency}&vs_currencies=${fromCurrency}`);
+            const data = await response.json();
+
+            const currentPrice = data[toCurrency][fromCurrency];
+            priceLabel.textContent = `Aktuális ár: ${currentPrice} ${toCurrency.toUpperCase()}`;
+            irjadki.innerHTML=`${amount} ${fromCurrency} == `
+
+            const convertedAmount = amount / currentPrice;
+            resultField.value = convertedAmount.toFixed(2);
+            irjadki.innerHTML=`${amount} ${toCurrency} == ${convertedAmount}`
+        } catch (error) {
+            console.error('Hiba történt:', error);
+            priceLabel.textContent = 'Hiba történt az árfolyam lekérése során.';
+        }
+}
+
+else{
+if (isNaN(amount) || amount <= 0) {
+            alert('Kérlek, adj meg egy érvényes mennyiséget.');
+            return;
+        }
+
+        try {
+            const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${fromCurrency}&vs_currencies=${toCurrency}`);
+            const data = await response.json();
+
+            const currentPrice = data[fromCurrency][toCurrency];
+            priceLabel.textContent = `Aktuális ár: ${currentPrice} ${toCurrency.toUpperCase()}`;
+
+            const convertedAmount = amount * currentPrice;
+            resultField.value = convertedAmount.toFixed(2);
+            irjadki.innerHTML=`${amount} ${fromCurrency} == ${toCurrency}`
+        } catch (error) {
+            console.error('Hiba történt:', error);
+            priceLabel.textContent = 'Hiba történt az árfolyam lekérése során.';
+        }
+}
+
+
+
+
+
+
+      
+    }
+</script>
+
+<!-- szar -->
+<!--  <script>
+  /* Pénzszámoló */
+  function startTracking() {
+  const currency = document.getElementById("currency").value.toLowerCase();
+  const targetCurrency = document.getElementById("targetCurrency").value.toLowerCase();
+  const amountElement = document.getElementById("currency_mennyiseg");
+  const convertedAmountElement = document.getElementById("currency_atvlatva");
+
+  // Kriptovaluták listája a CoinGecko API-ban
+  const cryptoCurrencies = ['HUF'];
+
+  // Árfolyam lekérése
+  let apiUrl;
+
+  if (cryptoCurrencies.includes(currency)) {
+    // Ha a kiinduló valuta kriptovaluta
+    apiUrl = `https://api.coingecko.com/api/v3/simple/price?ids=${targetCurrency}&vs_currencies=${currency}`;
+  } else {
+    // Ha a kiinduló valuta hagyományos valuta (fiat pénz)
+    apiUrl = `https://api.coingecko.com/api/v3/simple/price?ids=${currency}&vs_currencies=${targetCurrency}`;
+  }
+
+  fetch(apiUrl)
+    .then((response) => response.json())
+    .then((data) => {
+      let rate;
+      if (cryptoCurrencies.includes(currency)) {
+        // Ha a kiinduló valuta kriptovaluta
+        if (data[currency] && data[currency][targetCurrency]) {
+          rate = data[currency][targetCurrency];
+        }
+      } else {
+        // Ha a kiinduló valuta hagyományos valuta (fiat pénz)
+        if (data[targetCurrency] && data[targetCurrency][currency]) {
+          rate = 1 / data[targetCurrency][currency]; // Mivel fordítva váltunk
+        }
+      }
+
+      if (rate) {
+        const formattedRate = rate.toLocaleString("hu");
+
+        document.getElementById("currentPriceLabel").innerHTML = `
+          A(z) ${currency.toUpperCase()} aktuális ára ${targetCurrency.toUpperCase()}-ban: ${formattedRate} ${targetCurrency.toUpperCase()}
+        `;
+
+        // Átváltás az eredeti mennyiségből a célnyelvbe
+        amountElement.addEventListener("keyup", () => {
+          const amount = parseFloat(amountElement.value);
+          if (!isNaN(amount)) {
+            const convertedValue = rate * amount;
+            convertedAmountElement.value = convertedValue.toFixed(2);
+            document.getElementById("result").innerHTML = `
+              A(z) <strong>${amount}</strong> ${currency.toUpperCase()} értéke: <strong>${convertedValue.toFixed(2)}</strong> ${targetCurrency.toUpperCase()}
+            `;
+          }
+        });
+
+        // Átváltás visszafelé a célnyelvből az eredeti valutába
+        convertedAmountElement.addEventListener("keyup", () => {
+          const convertedAmount = parseFloat(convertedAmountElement.value);
+          if (!isNaN(convertedAmount)) {
+            const originalValue = convertedAmount / rate;
+            amountElement.value = originalValue.toFixed(8); // 8 tizedesjegy a pontos kripto értékhez
+          }
+        });
+      } else {
+        document.getElementById("result").innerHTML = "Hiba az árfolyam lekérésekor.";
+        document.getElementById("currentPriceLabel").innerHTML = "Hiba az aktuális ár lekérésekor.";
+      }
+    })
+    .catch((error) => {
+      document.getElementById("result").innerHTML = "Hiba az adatok lekérésekor.";
+      document.getElementById("currentPriceLabel").innerHTML = "Hiba az aktuális ár lekérésekor.";
+    });
+}
+
+// Új árfolyam lekérése, amikor a valuta vagy a célvaluta megváltozik
+/* document.getElementById("currency").addEventListener("change", startTracking);
+document.getElementById("targetCurrency").addEventListener("change", startTracking); */
+
+window.onload = function () {
+  startTracking();
+};
+</script> -->
+
+<!-- <script>
+   function startTracking() {
       const currency = document.getElementById("currency").value.toLowerCase();
       const targetCurrency = document.getElementById("targetCurrency").value.toLowerCase();
       const amountElement = document.getElementById("currency_mennyiseg");
       const convertedAmountElement = document.getElementById("currency_atvlatva");
 
+      // Kriptovaluták listája a CoinGecko API-ban
+      const cryptoCurrencies = ['bitcoin', 'ethereum', 'litecoin', 'ripple', 'solana'];
+
       // Árfolyam lekérése
-      fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${currency}&vs_currencies=${targetCurrency}`)
+      let apiUrl;
+
+      if (cryptoCurrencies.includes(currency) && cryptoCurrencies.includes(targetCurrency)) {
+        // Crypto to crypto conversion
+        apiUrl = `https://api.coingecko.com/api/v3/simple/price?ids=${currency}&vs_currencies=${targetCurrency}`;
+      } else if (cryptoCurrencies.includes(currency)) {
+        // Crypto to fiat conversion
+        apiUrl = `https://api.coingecko.com/api/v3/simple/price?ids=${currency}&vs_currencies=${targetCurrency}`;
+      } else if (cryptoCurrencies.includes(targetCurrency)) {
+        // Fiat to crypto conversion
+        apiUrl = `https://api.coingecko.com/api/v3/simple/price?ids=${targetCurrency}&vs_currencies=${currency}`;
+      } else {
+        // Fiat to fiat conversion (manual rate, no crypto)
+        apiUrl = `https://api.exchangerate-api.com/v4/latest/${currency.toUpperCase()}`;
+      }
+
+      fetch(apiUrl)
         .then((response) => response.json())
         .then((data) => {
-          if (data[currency] && data[currency][targetCurrency]) {
-            rate = data[currency][targetCurrency];
+          let rate;
+          if (cryptoCurrencies.includes(currency)) {
+            if (data[currency] && data[currency][targetCurrency]) {
+              rate = data[currency][targetCurrency];
+            }
+          } else if (cryptoCurrencies.includes(targetCurrency)) {
+            if (data[targetCurrency] && data[targetCurrency][currency]) {
+              rate = 1 / data[targetCurrency][currency];
+            }
+          } else {
+            rate = data.rates[targetCurrency.toUpperCase()];
+          }
+
+          if (rate) {
             const formattedRate = rate.toLocaleString("hu");
 
             document.getElementById("currentPriceLabel").innerHTML = `
@@ -213,7 +404,7 @@
               const convertedAmount = parseFloat(convertedAmountElement.value);
               if (!isNaN(convertedAmount)) {
                 const originalValue = convertedAmount / rate;
-                amountElement.value = originalValue.toFixed(8); // 8 tizedesjegy a pontos kripto értékhez
+                amountElement.value = originalValue.toFixed(8);
               }
             });
           } else {
@@ -227,14 +418,10 @@
         });
     }
 
-    // Új árfolyam lekérése, amikor a valuta vagy a célvaluta megváltozik
-    document.getElementById("currency").addEventListener("change", startTracking);
-    document.getElementById("targetCurrency").addEventListener("change", startTracking);
-
     window.onload = function () {
       startTracking();
     };
-  </script>
+</script> -->
 </body>
 
 </html>
