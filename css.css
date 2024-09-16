@@ -35,6 +35,7 @@ model-viewer {
 body{
     padding: 0;
     margin: 0;
+    font-family: Arial;
 }
 html, body {
     overflow-x: hidden; 
@@ -76,15 +77,55 @@ nav {
 #div2{
     color: #004e98;
 }
-
-
 .crypto{
-    position: absolute;
-    z-index: 3;
+    width: 1vh;
+    filter: blur(100);
+    opacity: 0;
+    transition: all 2s;
     width: 25vh;
     top: 110vh;
-    left: 0vh;
+    filter: blur(5px);
+/*     transform: translateX(-100%); */
+    transform: translateY(-100%);
 }
+.cryptoAnim{
+    position: absolute;
+    z-index: 3;
+    left: 0vh;
+    opacity: 1;
+    rotate: -20deg;
+    filter: blur(0px);
+    transform: translateY(0);
+    width: 25svh;
+}
+ .crypto:nth-child(2){
+    width: 20svh;
+    top: 130vh;
+    left: 30vh;
+    rotate: -30deg;
+    transition-delay: 200ms;
+}
+.crypto:nth-child(3){
+    width: 20svh;
+    top: 150vh;
+    left: 60vh;
+    rotate: 30deg;
+    transition-delay: 400ms;
+}
+.crypto:nth-child(4){
+
+    top: 170vh;
+    left: 70vh;
+    transition-delay: 600ms,
+}
+.crypto:nth-child(5){
+
+    top: 170vh;
+    left: 30vh;
+    transition-delay: 600ms,
+}
+
+
 
 /* steps elrejtés */
 input[type="number"]::-webkit-outer-spin-button,
@@ -169,7 +210,7 @@ input[type="number"] {
 
 
 .background span:nth-child(0) {
-    color: #7040ff;
+    color: #7040ff79;
     top: 57%;
     left: 48%;
     animation-duration: 281s;
@@ -178,7 +219,7 @@ input[type="number"] {
     box-shadow: 100vmin 0 13.053177337710997vmin currentColor;
 }
 .background span:nth-child(1) {
-    color: #7040ff;
+    color: #7040ff79;
     top: 41%;
     left: 47%;
     animation-duration: 151s;
@@ -187,7 +228,7 @@ input[type="number"] {
     box-shadow: -100vmin 0 12.543072112680763vmin currentColor;
 }
 .background span:nth-child(2) {
-    color: #ffffff;
+    color: #4d7cff6c;
     top: 80%;
     left: 69%;
     animation-duration: 113s;
@@ -196,7 +237,7 @@ input[type="number"] {
     box-shadow: -100vmin 0 13.125973423420023vmin currentColor;
 }
 .background span:nth-child(3) {
-    color: #ffffff;
+    color: #4d7cff6c;
     top: 93%;
     left: 91%;
     animation-duration: 222s;
@@ -205,7 +246,7 @@ input[type="number"] {
     box-shadow: -100vmin 0 12.548427247179903vmin currentColor;
 }
 .background span:nth-child(4) {
-    color: #7040ff;
+    color: #7040ff79;
     top: 79%;
     left: 85%;
     animation-duration: 63s;
@@ -214,7 +255,7 @@ input[type="number"] {
     box-shadow: -100vmin 0 13.043435256238343vmin currentColor;
 }
 .background span:nth-child(5) {
-    color: #ffffff;
+    color: #4d7cff6c;
     top: 100%;
     left: 97%;
     animation-duration: 446s;
@@ -223,7 +264,7 @@ input[type="number"] {
     box-shadow: 100vmin 0 12.509197458982946vmin currentColor;
 }
 .background span:nth-child(6) {
-    color: #0050a8;
+    color: #0051a84d;
     top: 29%;
     left: 88%;
     animation-duration: 16s;
@@ -232,7 +273,7 @@ input[type="number"] {
     box-shadow: -100vmin 0 12.815386794779728vmin currentColor;
 }
 .background span:nth-child(7) {
-    color: #0050a8;
+    color: #0051a84d;
     top: 15%;
     left: 97%;
     animation-duration: 238s;
@@ -241,7 +282,7 @@ input[type="number"] {
     box-shadow: -100vmin 0 12.575465244311976vmin currentColor;
 }
 .background span:nth-child(8) {
-    color: #0050a8;
+    color: #0051a84d;
     top: 74%;
     left: 43%;
     animation-duration: 437s;
@@ -250,7 +291,7 @@ input[type="number"] {
     box-shadow: -100vmin 0 13.41470387627893vmin currentColor;
 }
 .background span:nth-child(9) {
-    color: #0050a8;
+    color: #0051a84d;
     top: 42%;
     left: 16%;
     animation-duration: 59s;
@@ -259,7 +300,7 @@ input[type="number"] {
     box-shadow: -100vmin 0 12.625831620908537vmin currentColor;
 }
 .background span:nth-child(10) {
-    color: #0050a8;
+    color: #0051a84d;
     top: 16%;
     left: 7%;
     animation-duration: 163s;
@@ -268,7 +309,7 @@ input[type="number"] {
     box-shadow: -100vmin 0 12.945250592000065vmin currentColor;
 }
 .background span:nth-child(11) {
-    color: #ffffff;
+    color: #4d7cff6c;
     top: 54%;
     left: 63%;
     animation-duration: 448s;
@@ -277,7 +318,7 @@ input[type="number"] {
     box-shadow: 100vmin 0 13.112529509054973vmin currentColor;
 }
 .background span:nth-child(12) {
-    color: #ffffff;
+    color: #4d7cff6c;
     top: 50%;
     left: 82%;
     animation-duration: 392s;
@@ -286,7 +327,7 @@ input[type="number"] {
     box-shadow: -100vmin 0 13.048733903825156vmin currentColor;
 }
 .background span:nth-child(13) {
-    color: #7040ff;
+    color: #7040ff79;
     top: 84%;
     left: 87%;
     animation-duration: 333s;
@@ -295,7 +336,7 @@ input[type="number"] {
     box-shadow: 100vmin 0 13.499946455777472vmin currentColor;
 }
 .background span:nth-child(14) {
-    color: #7040ff;
+    color: #7040ff79;
     top: 72%;
     left: 46%;
     animation-duration: 219s;
@@ -304,7 +345,7 @@ input[type="number"] {
     box-shadow: 100vmin 0 13.399307524498946vmin currentColor;
 }
 .background span:nth-child(15) {
-    color: #0050a8;
+    color: #0051a84d;
     top: 29%;
     left: 61%;
     animation-duration: 190s;
@@ -313,7 +354,7 @@ input[type="number"] {
     box-shadow: 100vmin 0 13.228441442642973vmin currentColor;
 }
 .background span:nth-child(16) {
-    color: #0050a8;
+    color: #0051a84d;
     top: 21%;
     left: 98%;
     animation-duration: 440s;
@@ -322,7 +363,7 @@ input[type="number"] {
     box-shadow: 100vmin 0 12.754238428067543vmin currentColor;
 }
 .background span:nth-child(17) {
-    color: #0050a8;
+    color: #0051a84d;
     top: 5%;
     left: 23%;
     animation-duration: 475s;
@@ -331,7 +372,7 @@ input[type="number"] {
     box-shadow: -100vmin 0 13.101017452087016vmin currentColor;
 }
 .background span:nth-child(18) {
-    color: #ffffff;
+    color: #4d7cff6c;
     top: 66%;
     left: 84%;
     animation-duration: 438s;
@@ -340,7 +381,7 @@ input[type="number"] {
     box-shadow: -100vmin 0 13.051974070536506vmin currentColor;
 }
 .background span:nth-child(19) {
-    color: #ffffff;
+    color: #4d7cff6c;
     top: 87%;
     left: 83%;
     animation-duration: 344s;
@@ -349,7 +390,7 @@ input[type="number"] {
     box-shadow: 100vmin 0 13.073021384590637vmin currentColor;
 }
 .background span:nth-child(20) {
-    color: #ffffff;
+    color: #4d7cff6c;
     top: 75%;
     left: 47%;
     animation-duration: 127s;

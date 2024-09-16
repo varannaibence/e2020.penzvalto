@@ -2,5 +2,7 @@
 <a href="https://www.flaticon.com/free-icons/bitcoin" title="bitcoin icons">Bitcoin icons created by Freepik - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/solana" title="solana icons">Solana icons created by srip - Flaticon</a>
 <a href="https://www.flaticon.com/free-icons/ltc" title="ltc icons">Ltc icons created by bouzix - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/shiba-inu" title="shiba inu icons">Shiba inu icons created by bouzix - Flaticon</a>
+<a href="https://www.flaticon.com/free-icons/tether" title="tether icons">Tether icons created by Maniprasanth - Flaticon</a>
 Credit: Louis Hoebregts
 
