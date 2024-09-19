@@ -3,6 +3,9 @@ const observer = new IntersectionObserver((belepes) => {
         if (entry.isIntersecting) {
             entry.target.classList.add("cryptoAnim");
         }
+/*         else {
+            entry.target.classList.remove("cryptoAnim");
+        } */
     });
 });
 

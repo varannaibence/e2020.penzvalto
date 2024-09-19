@@ -35,7 +35,7 @@
         </div>
         <div class="row w-100">
           <div class="col-8 d-flex flex-column justify-content-center">
-            <div class="w-75">
+            <div class="w-50 udv">
               <h2 class="h2-udv">Üdvözlünk a FlipFunds-nál!🎉</h2>
               <p class="fs-5">
                 Mi vagyunk Magyarország első crypto & deviza váltója, ahol
@@ -64,38 +64,28 @@
           </div>
         </div>
       </div>
-      <div id="div2" class="d-flex align-items-center justify-content-center bg-light cryptoresz" style="height: 100vh;">
-        <img src="imgs/bitcoin.png" alt="" class="crypto">
-        <img src="imgs/ethereum.png" alt="" class="crypto" >
-        <img src="imgs/litecoin.png" alt="" class="crypto">
-        <img src="imgs/solana.png" alt="" class="crypto">
+      
+      <div id="div2" class="d-flex align-items-center justify-content-center bg-light" style="height: 100vh;">
         <div class="background">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
+          <div class="cryptoIconok">
+            <img src="imgs/avalanche.png" alt="" class="crypto">
+            <img src="imgs/bitcoin.png" alt="" class="crypto" >
+            <img src="imgs/bnb.png" alt="" class="crypto">
+            <img src="imgs/cardano.png" alt="" class="crypto">
+            <img src="imgs/dogecoin.png" alt="" class="crypto">
+            <img src="imgs/ethereum.png" alt="" class="crypto">
+            <img src="imgs/polkadot.png" alt="" class="crypto">
+            <img src="imgs/polygon.png" alt="" class="crypto">
+            <img src="imgs/shiba-inu.png" alt="" class="crypto">
+            <img src="imgs/solana.png" alt="" class="crypto">
+            <img src="imgs/tether.png" alt="" class="crypto">
+            <img src="imgs/xrp.png" alt="" class="crypto">
+          </div>
         </div>
         <div class="col">
-
         </div>
         <div class="row d-flex align-items-center justify-content-center  ">
+
           <div class="col rounded p-4" style="height: 50vh; width: 75vh;">
             <div class="tracker">
               <h1 class="h1-bold">VALUTA ÁTVÁLTÓ</h1>
@@ -128,7 +118,7 @@
                 </select><br /><br />
               </form>
 
-              <input type="button" class="btn btn-outline-primary" name="valtas_bt" onclick="startTracking()"
+              <input type="button" class="btn btn-outline-primary" name="valtas_bt" onclick="convertCurrency()"
                 value="Átváltás" id="valtas_bt">
               <br><br>
               <p id="currentPriceLabel">Aktuális ár: Betöltés...</p>
@@ -188,60 +178,53 @@
 
   </script>
   <script>
-    async function startTracking() {
-      const amount = parseFloat(document.getElementById('currency_mennyiseg').value);
-      const fromCurrency = document.getElementById('currency').value;
-      const toCurrency = document.getElementById('targetCurrency').value;
-      const priceLabel = document.getElementById('currentPriceLabel');
-      const resultField = document.getElementById('currency_atvlatva');
-      const irjadki = document.getElementById('result');
+async function convertCurrency() {
+    const amount = parseFloat(document.getElementById('currency_mennyiseg').value);
+    const fromCurrency = document.getElementById('currency').value.toUpperCase();
+    const toCurrency = document.getElementById('targetCurrency').value.toUpperCase();
 
-
-      if (fromCurrency == 'huf' || 'btc') {
-        if (isNaN(amount) || amount <= 0) {
-          alert('Kérlek, adj meg egy érvényes mennyiséget.');
-          return;
-        }
-
-        try {
-          const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${toCurrency}&vs_currencies=${fromCurrency}`);
-          const data = await response.json();
-
-          const currentPrice = data[toCurrency][fromCurrency];
-          priceLabel.textContent = `Aktuális ár: ${currentPrice} ${toCurrency.toUpperCase()}`;
-          irjadki.innerHTML = `${amount} ${fromCurrency} == `
-
-          const convertedAmount = amount / currentPrice;
-          resultField.value = convertedAmount.toFixed(2);
-          irjadki.innerHTML = `${amount} ${toCurrency} == ${convertedAmount}`
-        } catch (error) {
-          console.error('Hiba történt:', error);
-          priceLabel.textContent = 'Hiba történt az árfolyam lekérése során.';
-        }
-      }
-
-      else {
-        if (isNaN(amount) || amount <= 0) {
-          alert('Kérlek, adj meg egy érvényes mennyiséget.');
-          return;
-        }
-
-        try {
-          const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${fromCurrency}&vs_currencies=${toCurrency}`);
-          const data = await response.json();
-
-          const currentPrice = data[fromCurrency][toCurrency];
-          priceLabel.textContent = `Aktuális ár: ${currentPrice} ${toCurrency.toUpperCase()}`;
-
-          const convertedAmount = amount * currentPrice;
-          resultField.value = convertedAmount.toFixed(2);
-          irjadki.innerHTML = `${amount} ${fromCurrency} == ${toCurrency}`
-        } catch (error) {
-          console.error('Hiba történt:', error);
-          priceLabel.textContent = 'Hiba történt az árfolyam lekérése során.';
-        }
-      }
+    if (isNaN(amount) || amount <= 0) {
+        alert("Kérlek, adj meg egy érvényes mennyiséget!");
+        return;
     }
+
+    // Ellenőrizd, hogy kriptovalutáról van-e szó (használjuk CoinGecko API-t)
+    const cryptoCurrencies = ['BTC', 'ETH', 'LTC', 'XRP', 'SOL'];
+    const isCryptoFrom = cryptoCurrencies.includes(fromCurrency);
+    const isCryptoTo = cryptoCurrencies.includes(toCurrency);
+
+    try {
+        let rate;
+        if (isCryptoFrom || isCryptoTo) {
+            // CoinGecko API használata kriptovaluták átváltásához
+            const cryptoResponse = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${isCryptoFrom ? fromCurrency.toLowerCase() : toCurrency.toLowerCase()}&vs_currencies=${isCryptoFrom ? toCurrency.toLowerCase() : fromCurrency.toLowerCase()}`);
+            const cryptoData = await cryptoResponse.json();
+
+            if (isCryptoFrom) {
+                rate = cryptoData[fromCurrency.toLowerCase()][toCurrency.toLowerCase()];
+            } else {
+                rate = 1 / cryptoData[toCurrency.toLowerCase()][fromCurrency.toLowerCase()];
+            }
+        } else {
+            // Fiat valutákhoz FreeCurrencyAPI használata
+            const fiatResponse = await fetch(`https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_b9X2nYdVvDzQlbcewZZdbpNDEax57AAQyiQko4o2&base_currency=${fromCurrency}`);
+            const fiatData = await fiatResponse.json();
+
+            if (!fiatData.data || !fiatData.data[toCurrency]) {
+                alert("Nem sikerült lekérni az árfolyamot. Kérlek, próbáld újra később.");
+                return;
+            }
+            rate = fiatData.data[toCurrency];
+        }
+
+        const convertedAmount = amount * rate;
+        document.getElementById('currency_atvlatva').value = convertedAmount.toFixed(2);
+        document.getElementById('currentPriceLabel').innerText = `Aktuális ár: ${convertedAmount.toFixed(2)} ${toCurrency}`;
+    } catch (error) {
+        alert("Hiba történt az átváltás során. Kérlek, próbáld újra később.");
+        console.error("Error:", error);
+    }
+}
   </script>
 </body>
 
