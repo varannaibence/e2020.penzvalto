@@ -178,54 +178,77 @@
 
   </script>
   <script>
+// Manuálisan megadott árfolyamok kriptovalutákhoz
+const cryptoRates = {
+  BTC: { USD: 63240, EUR: 58623, HUF: 22043064 },
+  ETH: { USD: 2423, EUR: 2122, HUF: 2313205 },
+  LTC: { USD: 70, EUR: 65, HUF: 25936 },
+  XRP: { USD: 0.5, EUR: 0.47, HUF: 184 },
+  SOL: { USD: 150, EUR: 135, HUF: 61340 },
+};
+
 async function convertCurrency() {
-    const amount = parseFloat(document.getElementById('currency_mennyiseg').value);
-    const fromCurrency = document.getElementById('currency').value.toUpperCase();
-    const toCurrency = document.getElementById('targetCurrency').value.toUpperCase();
+  const amount = parseFloat(document.getElementById('currency_mennyiseg').value);
+  const fromCurrency = document.getElementById('currency').value.toUpperCase();
+  const toCurrency = document.getElementById('targetCurrency').value.toUpperCase();
 
-    if (isNaN(amount) || amount <= 0) {
-        alert("Kérlek, adj meg egy érvényes mennyiséget!");
+  if (isNaN(amount) || amount <= 0) {
+    alert("Kérlek, adj meg egy érvényes mennyiséget!");
+    return;
+  }
+
+  // Ellenőrizzük, hogy kriptovalutáról van-e szó
+  const cryptoCurrencies = ['BTC', 'ETH', 'LTC', 'XRP', 'SOL'];
+  const isCryptoFrom = cryptoCurrencies.includes(fromCurrency);
+  const isCryptoTo = cryptoCurrencies.includes(toCurrency);
+
+  try {
+    let rate;
+
+    // Ha kriptovalutáról van szó
+    if (isCryptoFrom || isCryptoTo) {
+      if (isCryptoFrom && cryptoRates[fromCurrency] && cryptoRates[fromCurrency][toCurrency]) {
+        rate = cryptoRates[fromCurrency][toCurrency];
+      } else if (isCryptoTo && cryptoRates[toCurrency] && cryptoRates[toCurrency][fromCurrency]) {
+        rate = 1 / cryptoRates[toCurrency][fromCurrency];
+      } else {
+        alert("Nem található árfolyam a megadott kriptovalutákhoz.");
         return;
+      }
+    } else {
+      // Fiat valutákhoz API használata
+      const fiatResponse = await fetch(`https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_b9X2nYdVvDzQlbcewZZdbpNDEax57AAQyiQko4o2&base_currency=${fromCurrency}`);
+      const fiatData = await fiatResponse.json();
+
+      if (!fiatData.data || !fiatData.data[toCurrency]) {
+        alert("Nem sikerült lekérni az árfolyamot. Kérlek, próbáld újra később.");
+        return;
+      }
+
+      rate = fiatData.data[toCurrency];
     }
 
-    // Ellenőrizd, hogy kriptovalutáról van-e szó (használjuk CoinGecko API-t)
-    const cryptoCurrencies = ['BTC', 'ETH', 'LTC', 'XRP', 'SOL'];
-    const isCryptoFrom = cryptoCurrencies.includes(fromCurrency);
-    const isCryptoTo = cryptoCurrencies.includes(toCurrency);
+    const convertedAmount = amount * rate;
 
-    try {
-        let rate;
-        if (isCryptoFrom || isCryptoTo) {
-            // CoinGecko API használata kriptovaluták átváltásához
-            const cryptoResponse = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${isCryptoFrom ? fromCurrency.toLowerCase() : toCurrency.toLowerCase()}&vs_currencies=${isCryptoFrom ? toCurrency.toLowerCase() : fromCurrency.toLowerCase()}`);
-            const cryptoData = await cryptoResponse.json();
+    // A szám formázása, hogy minden harmadik számjegy után pont kerüljön a címkében
+    const formattedAmount = convertedAmount.toLocaleString('hu-HU', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
 
-            if (isCryptoFrom) {
-                rate = cryptoData[fromCurrency.toLowerCase()][toCurrency.toLowerCase()];
-            } else {
-                rate = 1 / cryptoData[toCurrency.toLowerCase()][fromCurrency.toLowerCase()];
-            }
-        } else {
-            // Fiat valutákhoz FreeCurrencyAPI használata
-            const fiatResponse = await fetch(`https://api.freecurrencyapi.com/v1/latest?apikey=fca_live_b9X2nYdVvDzQlbcewZZdbpNDEax57AAQyiQko4o2&base_currency=${fromCurrency}`);
-            const fiatData = await fiatResponse.json();
-
-            if (!fiatData.data || !fiatData.data[toCurrency]) {
-                alert("Nem sikerült lekérni az árfolyamot. Kérlek, próbáld újra később.");
-                return;
-            }
-            rate = fiatData.data[toCurrency];
-        }
-
-        const convertedAmount = amount * rate;
-        document.getElementById('currency_atvlatva').value = convertedAmount.toFixed(2);
-        document.getElementById('currentPriceLabel').innerText = `Aktuális ár: ${convertedAmount.toFixed(2)} ${toCurrency}`;
-    } catch (error) {
-        alert("Hiba történt az átváltás során. Kérlek, próbáld újra később.");
-        console.error("Error:", error);
-    }
+    // Az input mezőben csak a nyers számot jelenítjük meg
+    document.getElementById('currency_atvlatva').value = convertedAmount.toFixed(2);
+    
+    // A címkében a formázott verzió
+    document.getElementById('currentPriceLabel').innerText = `Aktuális ár: ${formattedAmount} ${toCurrency}`;
+  } catch (error) {
+    alert("Hiba történt az átváltás során. Kérlek, próbáld újra később.");
+    console.error("Error:", error);
+  }
 }
+
   </script>
+  
 </body>
 
 </html>
