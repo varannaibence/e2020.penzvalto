@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+</head>
+<body>
+
+    <form id="trackerForm" align="center">
+        <label for="mennyiseg">Átváltani kívánt mennyiség</label>
+        <br>
+        <input type="number" id="mennyiseg" placeholder="0.0" min="0.0000000001" step="any" required>
+        <select id="mirol" name="currency" required>
+          <option value="bitcoin">BTC</option>
+          <option value="ethereum">ETH</option>
+          <option value="litecoin">LTC</option>
+          <option value="ripple">XRP</option>
+          <option value="solana">SOL</option>
+          <option value="usd">USD</option>
+          <option value="eur">EUR</option>
+          <option value="huf">HUF</option>
+          <option value="gbp">GBP</option>
+        </select>
+        <br /><br />
+        <label for="currency_atvlatva">Átváltott mennyiség</label>
+        <br>
+        <input type="number" id="currency_atvlatva" placeholder="0.0" readonly>
+        <select id="targetCurrency" name="targetCurrency" required>
+            <option value="bitcoin">BTC</option>
+            <option value="ethereum">ETH</option>
+            <option value="litecoin">LTC</option>
+            <option value="ripple">XRP</option>
+            <option value="solana">SOL</option>
+            <option value="usd">USD</option>
+            <option value="eur">EUR</option>
+            <option value="huf">HUF</option>
+            <option value="gbp">GBP</option>
+        </select>
+        <br /><br/>
+        <input type="button" value="Átváltás" onclick="startTracking()">
+
+        <p id="currentPriceLabel">Aktuális ár: Betöltés...</p>
+        <p id="result"></p>
+    </form>
+
+    <script>
+        async function startTracking() {
+            const amount = parseFloat(document.getElementById('mennyiseg').value);
+            const fromCurrency = document.getElementById('mirol').value;
+            const toCurrency = document.getElementById('targetCurrency').value;
+            const priceLabel = document.getElementById('currentPriceLabel');
+            const resultField = document.getElementById('currency_atvlatva');
+
+
+if (fromCurrency=='huf')
+{
+    if (isNaN(amount) || amount <= 0) {
+                alert('Kérlek, adj meg egy érvényes mennyiséget.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${toCurrency}&vs_currencies=${fromCurrency}`);
+                const data = await response.json();
+
+                const currentPrice = data[toCurrency][fromCurrency];
+                priceLabel.textContent = `Aktuális ár: ${currentPrice} ${toCurrency.toUpperCase()}`;
+
+                const convertedAmount = amount / currentPrice;
+                resultField.value = convertedAmount.toFixed(2);
+
+            } catch (error) {
+                console.error('Hiba történt:', error);
+                priceLabel.textContent = 'Hiba történt az árfolyam lekérése során.';
+            }
+}
+
+else{
+    if (isNaN(amount) || amount <= 0) {
+                alert('Kérlek, adj meg egy érvényes mennyiséget.');
+                return;
+            }
+
+            try {
+                const response = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${fromCurrency}&vs_currencies=${toCurrency}`);
+                const data = await response.json();
+
+                const currentPrice = data[fromCurrency][toCurrency];
+                priceLabel.textContent = `Aktuális ár: ${currentPrice} ${toCurrency.toUpperCase()}`;
+
+                const convertedAmount = amount * currentPrice;
+                resultField.value = convertedAmount.toFixed(2);
+
+            } catch (error) {
+                console.error('Hiba történt:', error);
+                priceLabel.textContent = 'Hiba történt az árfolyam lekérése során.';
+            }
+}
+
+
+
+
+
+
+          
+        }
+    </script>
+
+</body>
+</html>
