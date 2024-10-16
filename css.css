@@ -2,7 +2,7 @@
     --sKek: #004e98;
     --vKek: #056ccc;
     --szurke: #c0c0c0;
-    --vFeher: #ebebeb;
+    --vFeher: #f8f8f8;
     --vNsarga: #ff6700;
 }
 
@@ -58,6 +58,7 @@ html, body {
     background-repeat: no-repeat;
     background-position: center center;
     background-size: 75%;
+    background-color: var(--vFeher);
 }
 .h1-bold-gradient{
     font-family: MPLUS-EXTRA-BOLD; font-size: 15vh;
@@ -76,7 +77,11 @@ html, body {
     background: linear-gradient(90deg,#004e98, #3ca1ff);
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: 6vh;
+    font-size: 7vh;
+    font-family: MPLUS-EXTRA-BOLD;
+}
+h1{
+    font-size: 7vh;
     font-family: MPLUS-EXTRA-BOLD;
 }
 nav {
@@ -89,7 +94,7 @@ nav {
   }
 
 #div2{
-    color: #004e98;
+    background-color: var(--sKek);
 }
 .crypto{
     width: 1vh;
@@ -201,8 +206,20 @@ nav {
     transition-delay: 700ms,
 }
 
-
-
+.cardAnimZ{
+    size: 0%;
+    filter: blur(3px);
+    opacity: 0;
+    transition: all ease-in-out 1.5s;
+    transform: translateX(-100%);
+    margin: 2vh;
+}
+.cardAnim{
+    size: 100%;
+    filter: blur(0);
+    opacity: 1;
+    transform: translateX(0);
+}
 /* steps elrejtés */
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
@@ -254,5 +271,16 @@ input[type="number"] {
     z-index: 2;
     border-left: none;
   }
-
+.vvalto{
+    border-radius: 15px 15px;
+    background-color: var(--vFeher);
+    height: 60vh;
+    margin-right: 8vh;
+}
   /* generatl hatter */
+
+.szabaly{
+    font-style: italic;
+    text-align: center;
+    color: #3ca1ff;
+}
