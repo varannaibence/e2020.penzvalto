@@ -206,7 +206,9 @@ nav {
     rotate: 55deg;
     transition-delay: 700ms,
 }
-
+.card{
+    height: 50vh;
+}
 .cardAnimZ{
     size: 0%;
     filter: blur(3px);
